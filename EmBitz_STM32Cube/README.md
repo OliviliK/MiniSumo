@@ -42,8 +42,8 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
 * Open EmBitz
 * Select: File, New, Project ...
 * Select STmicro-ARM
-* Enter Project title (<<ProjFolder>>)
-* Select Project folder (<ProjParentFolder>)
+* Enter Project title, such as [ProjFolder]
+* Select Project folder, such as [ProjParentFolder]
 * Leave the compiler default values unchanged
 * Select Device Family, such as Cortex M4
 * Select Device Series, such as STM32F4xx
@@ -88,8 +88,8 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
 ### Define Project Settings
 
 * Select: Project, Settings ... (Alt-P)
-* Enter Project Name as <ProjFolder>
-* Select Project Location as <ProjParentFolder>
+* Enter Project Name as [ProjFolder]
+* Select Project Location as [ProjParentFolder]
   * This allows STM32CubeMX to create folders and files for EmBitz without copy operations 
 * Select Other Toolchains (GPDSC)
 * Open Code Generator tab
@@ -103,7 +103,7 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
 * Observe how
   * The **startup_stm32f4xx.S** assembly file did stay in src folder
   * Folders __Drivers__ and __Inc__ were created
-  * Files __.mxproject__, __<ProjFolder>.gpdsc__, and __<ProjFolder>.ioc__ were created
+  * Files __.mxproject__, __[ProjFolder].gpdsc__, and __[ProjFolder].ioc__ were created
 * Exit STM32CubeMX
 
 ----
@@ -115,13 +115,13 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
 * Select "Add files recursively ..."
 * Click OK to see the additions
 * Click OK to include all files
-* In project tree select: ASM Sources, CMSIS, Device, ST, <device series>, Source, Templates
+* In project tree select: ASM Sources, CMSIS, Device, ST, [device series], Source, Templates
 * In the Templates, under __arm__, __gcc__, and __iar__, there are startup assembly files (extension small s) and all of theme have to be removed
 * Right click the file name and select "Remove file from project" for these 3 files
 
 ### Update Symbol Definitions
 * Select: Project, Build Options ... (Alt-F7)
-* Select <ProjFolder> on top of __Debug__ and __Release__ to cover both build type target
+* Select [ProjFolder] on top of __Debug__ and __Release__ to cover both build type target
 * In Compiler settings, in __#define__ tab
 * Add the device type with three numbers, such as __STM32F407xx__.  The EmBitz default types, such as *STM32F407VE* and *STM32F4XX*, are not used by STM32CubeMX code
 * Remove symbol *__FPU_USED* to avoid duplicate definitions
