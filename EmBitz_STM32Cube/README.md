@@ -78,8 +78,8 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
 * Select New Project
 * Select Series, such as STM32F4
 * Select Lines, such as STM32F407/417
-* Select MCU, such as STM407VETx
-* Click OK to confirm the selection
+* Select Part No, such as STM407VETx
+* Click OK (or Start Project) to confirm the selection
 
 ### Enable Debugging Pins
 * In Pinout Configuration Peripherals, select __SYS__
