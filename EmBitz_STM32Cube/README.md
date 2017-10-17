@@ -53,9 +53,7 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
 
 ### Remove Project Files
 * Select Management pane
-* In Projects tab, select the new project
-* In the project tree, select Sources
-* Right click src
+* In Projects tab, right click the new project
 * Select Remove files ...
 * Click OK to remove all files
 * Click Yes to confirm the removals
@@ -67,8 +65,11 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
 * Open the project folder
 * Observe the subfolders cmis, inc, and src
 * Delete __cmis__ and __inc__ subfolders
+  * cmis has some arm and core files
+  * inc has stm32 and system header files
 * Open __src__ subfolder
 * Delete all other files except __startup_stm32f4xx.S__
+  * The deleted files are main and system C-files
 
 ----
 ## Start a New STM32CubeMX Project
