@@ -161,5 +161,5 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
 * For example, with FreeRTOS
   * The IAR and RVDS Sources and Headers files have to be removed
   * Only the GCC files are used
-* There can be some duplicate system files, such as **system_stm32f4xx.c__.  Leave the only reference to files in __src__ and remove the references in __Sources__.
+* There can be some duplicate system files, such as **system_stm32f4xx.c**.  Leave the only reference to files in __src__ and remove the references in __Sources__.
   * Note: Some of these conflicts are not show during project build, but are shown during linking before starting debugging.
