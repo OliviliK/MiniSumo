@@ -96,6 +96,7 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
 * Open Code Generator tab
 * Select "Copy only the necessary library files"
 * Click OK to confirm the settings
+* It is possible that some firmware files need to be updated, accept the downloads
 * Select: File, Save Project (Ctrl-S)
 
 ### Generate Code
@@ -116,21 +117,23 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
 * Select "Add files recursively ..."
 * Click OK to see the additions
 * Click OK to include all files
-* In project tree select: ASM Sources, CMSIS, Device, ST, [device series], Source, Templates
+* Click OK to iclude both Debug and Release
+* In project tree select: Sources, CMSIS, Device, ST, [device series], Source, Templates
 * In the Templates, under __arm__, __gcc__, and __iar__, there are startup assembly files (extension small s) and all of theme have to be removed
+  * In some newer versions of STM32CubeMX, the extra assembly files are not created
 * Right click the file name and select "Remove file from project" for these 3 files
 
 ### Update Symbol Definitions
 * Select: Project, Build Options ... (Alt-F7)
 * Select [ProjFolder] on top of __Debug__ and __Release__ to cover both build type target
-* In Compiler settings, in __#define__ tab
+* In Compiler settings, in __#defines__ tab
 * Add the device type with three numbers, such as __STM32F407xx__.  The EmBitz default types, such as *STM32F407VE* and *STM32F4XX*, are not used by STM32CubeMX code
 * Remove symbol *__FPU_USED* to avoid duplicate definitions
 * Remove unused symbols, such as *STM32F407VE* and *STM32F4XX*
 
 ### Build All
-* Select: Buid, Build all targets
-* Observe that there are no error messages
+* Select: Buid, Rebuild all targets
+* Observe that there were 0 errors and 0 warnings
 
 ### Start Debugger
 * Select: Debug, Start Debug Session (F8)
