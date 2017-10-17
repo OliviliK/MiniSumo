@@ -42,7 +42,7 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
 * Open EmBitz
 * Select: File, New, Project ...
 * Select STmicro-ARM
-* Enter Project title (<ProjFolder>)
+* Enter Project title ('<ProjFolder>')
 * Select Project folder (<ProjParentFolder>)
 * Leave the compiler default values unchanged
 * Select Device Family, such as Cortex M4
