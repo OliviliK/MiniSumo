@@ -42,8 +42,8 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
 * Open EmBitz
 * Select: File, New, Project ...
 * Select STmicro-ARM
-* Enter Project title
-* Select Project folder
+* Enter Project title (<ProjFolder>)
+* Select Project folder (<ProjParentFolder>)
 * Leave the compiler default values unchanged
 * Select Device Family, such as Cortex M4
 * Select Device Series, such as STM32F4xx
@@ -58,7 +58,7 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
 * Right click src
 * Select Remove files ...
 * Click OK to remove all files
-* Click Yes to confirm the deletion
+* Click Yes to confirm the removals
 * Observe that the project tree is empty
 * Select: File, Save everything (or Alt-Shift-S)
 * Close EmBitz
@@ -66,12 +66,12 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
 ### Clean Project Folders and Files
 * Open the project folder
 * Observe the subfolders cmis, inc, and src
-* Delete cmis and inc subfolders
-* Open inc subfolder
-* Delete all other files except startup_stm32f4xx.S
+* Delete __cmis__ and __inc__ subfolders
+* Open __src__ subfolder
+* Delete all other files except __startup_stm32f4xx.S__
 
 ----
-## Start a New STM32Cube Project
+## Start a New STM32CubeMX Project
 ### Create a New Project
 * Open STM32CubeMX
 * Select New Project
@@ -81,16 +81,16 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
 * Click OK to confirm the selection
 
 ### Enable Debugging Pins
-* In Pinout Configuration Peripherals, select SYS
-* In Debug line, select Serial Wire
+* In Pinout Configuration Peripherals, select __SYS__
+* In Debug line, select __Serial Wire__
+  * This enables the __ST-LINK V2__ connection to the 4 __SWD__ pins
 
 ### Define Project Settings
 
-To avoid copy operations between STM32Cube and EmBitz, it is important that both projects are sharing the same location where the tools are generating the folders and files.
-
 * Select: Project, Settings ... (Alt-P)
-* Enter Project Name as EmBitz project title
-* Select Project Location as EmBitz project location
+* Enter Project Name as <ProjFolder>
+* Select Project Location as <ProjParentFolder>
+  * This allows STM32CubeMX to create folders and files for EmBitz without copy operations 
 * Select Other Toolchains (GPDSC)
 * Open Code Generator tab
 * Select "Copy only the necessary library files"
@@ -101,9 +101,9 @@ To avoid copy operations between STM32Cube and EmBitz, it is important that both
 * Select: Project, Generate Code (Ctrl-Shift-G)
 * Click "Open Folder" to see the generated folders and files
 * Observe how
-  1. The **startup_stm32f4xx.S** assembly file did stay in src folder
-  2. STM32Cube created folders Drivers and Inc
-  3. STM32Cube created files .mxproject, <title>.gpdsc, and <title>.ioc
+  * The **startup_stm32f4xx.S** assembly file did stay in src folder
+  * Folders __Drivers__ and __Inc__ were created
+  * Files __.mxproject__, __<ProjFolder>.gpdsc__, and __<ProjFolder>.ioc__ were created
 * Exit STM32CubeMX
 
 ----
@@ -116,16 +116,16 @@ To avoid copy operations between STM32Cube and EmBitz, it is important that both
 * Click OK to see the additions
 * Click OK to include all files
 * In project tree select: ASM Sources, CMSIS, Device, ST, <device series>, Source, Templates
-* In the Templates, under arm, gcc, and iar, there are startup assembly files (extension small s) and all of theme have to be removed
-* Right click the file name and select "Remove file from project" for the 3 files
+* In the Templates, under __arm__, __gcc__, and __iar__, there are startup assembly files (extension small s) and all of theme have to be removed
+* Right click the file name and select "Remove file from project" for these 3 files
 
 ### Update Symbol Definitions
 * Select: Project, Build Options ... (Alt-F7)
-* Select project name on top of Debug and Release to cover both build type target
-* In Compiler settings, in #define tab
-* Add the device type with three numbers, such as STM32F407xx.  The EmBitz default types, such as STM32F407VE and STM32F4XX, are not enough for STM32Cube
-* Remove symbol __FPU_USED to avoid duplicate definitions
-* Remove unused symbols, such as STM32F407VE and STM32F4XX
+* Select <ProjFolder> on top of __Debug__ and __Release__ to cover both build type target
+* In Compiler settings, in __#define__ tab
+* Add the device type with three numbers, such as __STM32F407xx__.  The EmBitz default types, such as *STM32F407VE* and *STM32F4XX*, are not used by STM32CubeMX code
+* Remove symbol *__FPU_USED* to avoid duplicate definitions
+* Remove unused symbols, such as *STM32F407VE* and *STM32F4XX*
 
 ### Build All
 * Select: Buid, Build all targets
@@ -137,8 +137,9 @@ To avoid copy operations between STM32Cube and EmBitz, it is important that both
 
 ----
 ## Add the Other Parts of Your Project
-* Open STM32Cube
+* Open STM32CubeMX
 * Add and modify your project
 * Generate code
 * Open EmBitz
-* Add the new parts to your project
+* Update your project tree
+* Build and debug
