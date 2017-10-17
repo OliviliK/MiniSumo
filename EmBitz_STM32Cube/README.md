@@ -163,3 +163,13 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
   * Only the GCC files are used
 * There can be some duplicate system files, such as **system_stm32f4xx.c**.  Leave the only reference to files in __src__ and remove the references in __Sources__.
   * Note: Some of these conflicts are not show during project build, but are shown during linking before starting debugging.
+  
+----
+
+# Add SVD File for Symbolic Names of Peripheral Registers
+* Use google to find **Resource Selector System View Description**
+* Open the www.st.com › Home › Resources page
+* Click on the series name, such as STM32F4
+* Open the downloaded ZIP file
+* Move the SVD file into [ProjFolder]
+* In EmBitz, select Debug, Interfaces, select the downloaded SVD file
