@@ -1,15 +1,15 @@
-# STM32CubeMx Import to EmBitz 1.1
+# STM32CubeMx Import to EmBitz 1.11
 
-The basic assumption is that the reader has EmBitz 1.1 and STMCubeMX installed.  It is possible that a newer version of EmBitz will reduce the required effort.  There is no particular requirement for STM32CubeMx version. The testing of these steps is done with versions 4.19.0 and 4.22.1.
+The basic assumption is that the reader has __EmBitz 1.11__ and __STMCubeMX__ installed.  It is possible that a newer version of EmBitz will reduce the required effort.  There is no particular requirement for STM32CubeMx version. The testing of these steps is done with versions 4.19.0 and 4.22.1.
 
-The testing did confirm that the migration from 4.19.0 to 4.22.1 is working with EmBitz.
+The testing did confirm that the STM32CubeMX migration from 4.19.0 to 4.22.1 is working with EmBitz.
 
 ----
 ## Current State
 The [EmBitz](https://www.embitz.org/) IDE uses the classic Standard Peripheral Library from ST for ARM processors.  ST has stopped the development of SPL and created [STM32CubeMX](http://www.st.com/content/st_com/en/products/development-tools/software-development-tools/stm32-software-development-tools/stm32-configurators-and-code-generators/stm32cubemx.html) as a modern alternative.
 
 ### EmBitz
-This subject has been discussed in EmBitz [Forums](https://www.embitz.org/forum/) for several years and there are expectations that a new version after 1.1 could have a native support for importing from STM32CubeMx.
+This subject has been discussed in EmBitz [Forums](https://www.embitz.org/forum/) for several years and there are expectations that a new version after 1.11 could have a native support for importing from STM32CubeMx.
 
 This article is inspired by a [post](https://www.embitz.org/forum/thread-710-page-2.html) made by user **Traubensaft** with a reference to a German youtube posting.
 
@@ -29,6 +29,13 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
 ----
 ## Basic Steps
 
+1. Create a new EmBitz Project
+1. Remove files from Project Tree
+1. Delete all files except **startup_stm32f4xx.S**
+1. Create a new STM32CubeMX Project in EmBitz Project Folder
+1. Generate STM32CubeMX code
+1. In EmBitz Project add Files to Project Tree and update Defintions
+
 ----
 ## Start an Empty EmBitz Project
 ### Create a New Project
@@ -44,7 +51,7 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
 * Unselect Standard Peripheral Library
 * Leave the debugger default values unchanged
 
-### Delete Most Files
+### Remove Project Files
 * Select Management pane
 * In Projects tab, select the new project
 * In the project tree, select Sources
