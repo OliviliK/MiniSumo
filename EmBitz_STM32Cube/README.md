@@ -1,6 +1,6 @@
 # STM32CubeMx Import to EmBitz 1.11
 
-The basic assumption is that the reader has __EmBitz 1.11__ and __STMCubeMX__ installed.  It is possible that a newer version of EmBitz will reduce the required effort.  There is no particular requirement for STM32CubeMx version. The testing of these steps is done with versions 4.19.0 and 4.22.1.
+The basic assumption is that the reader has __EmBitz 1.11__ and __STMCubeMX__ installed.  It is possible that a newer version of EmBitz will reduce the required effort.  There is no particular requirement for STM32CubeMx version. The testing of these steps is done with versions 4.19.0, 4.22.1, and 4.23.0.
 
 The testing did confirm that the STM32CubeMX migration from 4.19.0 to 4.22.1 is working with EmBitz.
 
@@ -21,22 +21,16 @@ For me, a significant benefit is a support for **F7** processors that are not co
 
 > It also embeds a comprehensive software platform, delivered per Series (such as STM32CubeF4 for STM32F4 Series). This platform includes the STM32Cube HAL (an STM32 abstraction layer embedded software ensuring maximized portability across the STM32 portfolio), the STM32Cube LL (low-layer APIs, a fast, light-weight, expert-oriented layer), plus a consistent set of middleware components such as RTOS, USB, TCP/IP and graphics. All the embedded software utilities are delivered with a full set of examples.
 
-### Application Libraries
-In addition to the platform and RTOS library, third-party libraries are used in the EmBitz ARM projects. For example, the fast **BLDC ESC** communication protocol **DShot** is described in [BetaFlight GITHUB Wiki](https://github.com/betaflight/betaflight/wiki/DSHOT-ESC-Protocol) and the code can be found in [pwm 
-output.c](https://github.com/betaflight/betaflight/blob/master/src/main/drivers/pwm_output.c) file.
-
-The BetaFlight application library uses STM32CubeMX HAL and LL API. 
-
 ----
 
 ## Basic Steps
 
 1. Create a new EmBitz Project
 1. Remove files from Project Tree
-1. Delete all files except **startup_stm32f4xx.S**
+1. Delete all files except **[ProjectName].ebp**
 1. Create a new STM32CubeMX Project in EmBitz Project Folder
 1. Generate STM32CubeMX code
-1. In EmBitz Project add Files to Project Tree and update Defintions
+1. In EmBitz Project add Files to Project Tree,remove duplicates, and update Defintions
 
 ----
 
@@ -66,13 +60,8 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
 
 ### Clean Project Folders and Files
 * Open the project folder
-* Observe the subfolders cmis, inc, and src
-* Delete __cmis__ and __inc__ subfolders
-  * cmis has some arm and core files
-  * inc has stm32 and system header files
-* Open __src__ subfolder
-* Delete all other files except __startup_stm32f4xx.S__
-  * The deleted files are main and system C-files
+* Delete all subfolders
+* Delete all other files except **[ProjectName].ebp**
 
 ----
 
@@ -93,7 +82,7 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
 ### Define Project Settings
 
 * Select: Project, Settings ... (Alt-P)
-* Enter Project Name as [ProjFolder]
+* Enter Project Name as [ProjFolder], this is the same as the EmBitz project
 * Select Project Location as [ProjParentFolder]
   * This allows STM32CubeMX to create folders and files for EmBitz without copy operations 
 * Select Other Toolchains (GPDSC)
@@ -107,7 +96,7 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
 * Select: Project, Generate Code (Ctrl-Shift-G)
 * Click "Open Folder" to see the generated folders and files
 * Observe how
-  * The **startup_stm32f4xx.S** assembly file did stay in src folder
+  * The **[ProjectName].ebp** file did stay
   * Folders __Drivers__ and __Inc__ were created
   * Files __.mxproject__, __[ProjFolder].gpdsc__, and __[ProjFolder].ioc__ were created
 * Exit STM32CubeMX
@@ -128,21 +117,52 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
   * In some newer versions of STM32CubeMX, the extra assembly files are not created
 * Right click the file name and select "Remove file from project" for these 3 files
 
+### Add startup and loader files
+* Locate the STM32Cube repository on your disk (created by STM32CubeMx installation)
+  * A typical location is **C:\Users\[user name]\STM32Cube\Repository**
+* Select the latest version of the target MCU, such as **STM32Cube_FW_F4_V1.18.0**
+* Select suitable platform template, such as **Projects\STM32F4-Discovery\Templates**
+* Select the startup file in **SW4STM32** folder
+  * Such as **C:\Users\[user name]\STM32Cube\Repository\STM32Cube_FW_F4_V1.18.0\Projects\STM32F4-Discovery\Templates\SW4STM32\startup_stm32f407xx.s**
+* Copy the startup assembly file into **[ProjectFolder]\Src**
+* Copy the best matching loader file into **[ProjectFolder]** from
+  * C:\Users\[user name]\STM32Cube\Repository\STM32Cube_FW_F4_V1.18.0\Projects\STM32F4-Discovery\Templates\SW4STM32\STM32F4-Discovery\STM32F407VGTx_FLASH.ld
+* In this case there was no F407VE file and the F407VG was the closest match
+* Optionally update the memory size in the copied loader file
+* In EmBitz add the assembly file into project
+* Select: Project, Build Options ... (Alt-F7)
+* Select [ProjFolder] on top of __Debug__ and __Release__ to cover both build type target
+* Select __Device tab__
+* In __Linker script__ field enter **./[loader file].ld**, such as ./STM32F407VGTx_FLASH.ld
+
 ### Update Symbol Definitions
 * Select: Project, Build Options ... (Alt-F7)
 * Select [ProjFolder] on top of __Debug__ and __Release__ to cover both build type target
 * In Compiler settings, in __#defines__ tab
-* Add the device type with three numbers, such as __STM32F407xx__.  The EmBitz default types, such as *STM32F407VE* and *STM32F4XX*, are not used by STM32CubeMX code
-* Remove symbol *__FPU_USED* to avoid duplicate definitions
-* Remove unused symbols, such as *STM32F407VE* and *STM32F4XX*
+* Remove all default symbols
+* Add the device type, such as __STM32F407xx__
+* If you don't know the device type, you can leave this field empty and find out the device type based on the compiler error message.  The source code shows the expected device types and you can choose the matching one.
 
 ### Build All
 * Select: Buid, Rebuild all targets
 * Observe that there were 0 errors and 0 warnings
+* If there are error messages, the fix is obvious
+  * Add the device type into #defines
+  * Remove source and header files from the project belonging to IAR, RVDS, or other IDE tools
+  * Leave the GCC and SW4STM32 files
+* Here are some example directories
+  * Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM4F
+  * Middlewares\Third_Party\FreeRTOS\Source\portable\RVDS\ARM_CM4F
+* Some of the conflicts are not detected during compilation, but during linking beore loading
+* Here are some example files
+  * Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\system_stm32F4xx.c
+* The extra files should not be deleted because the next code genereation by CubeMx will add them back
 
-### Start Debugger
+----
+
+## Start Debugger
 * Select: Debug, Start Debug Session (F8)
-* Observe that the loading and the executions start are working                 
+* Observe that the loading and the executions start are working
 
 ----
 
@@ -154,16 +174,6 @@ The BetaFlight application library uses STM32CubeMX HAL and LL API.
 * Update your project tree
 * Build and debug
 
-----
-
-## Special Cases
-* In some cases, there are still rudimental files from other IDE tools supported by STM32CubeMX or Third Party components
-* For example, with FreeRTOS
-  * The IAR and RVDS Sources and Headers files have to be removed
-  * Only the GCC files are used
-* There can be some duplicate system files, such as **system_stm32f4xx.c**.  Leave the only reference to files in __src__ and remove the references in __Sources__.
-  * Note: Some of these conflicts are not show during project build, but are shown during linking before starting debugging.
-  
 ----
 
 # Add SVD File for Symbolic Names of Peripheral Registers
