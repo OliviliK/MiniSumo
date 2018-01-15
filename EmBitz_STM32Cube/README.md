@@ -112,7 +112,7 @@ For me, a significant benefit is a support for **F7** processors that are not co
 * Click OK to see the additions
 * Click OK to include all files
 * Click OK to iclude both Debug and Release
-* In project tree select: Sources, CMSIS, Device, ST, [device series], Source, Templates
+* In project tree select: Sources, Drivers, CMSIS, Device, ST, [device series], Source, Templates
 * In the Templates, under __arm__, __gcc__, and __iar__, there are startup assembly files (extension small s) and all of theme have to be removed
   * In some newer versions of STM32CubeMX, the extra assembly files are not created
 * Right click the file name and select "Remove file from project" for these 3 files
@@ -183,3 +183,27 @@ For me, a significant benefit is a support for **F7** processors that are not co
 * Open the downloaded ZIP file
 * Move the SVD file into [ProjFolder]
 * In EmBitz, select Debug, Interfaces, select the downloaded SVD file
+
+----
+
+# EBmonitor is not working
+It seems that the default settings for EBmonitor are not working with the CubeMX defaults.
+The fix requires three code inserts in CubeMX created code.
+
+```c
+/* USER CODE BEGIN PV */
+/* Private variables ---------------------------------------------------------*/
+#define EBmonitorBufLength 128
+char EBmonitorBuffer[EBmonitorBufLength];
+```
+
+```c
+/* USER CODE BEGIN PFP */
+/* Private function prototypes -----------------------------------------------*/
+void EBmonitor_buffer(FILE* , char*, uint16_t);
+```
+
+```c
+  /* USER CODE BEGIN 2 */
+  EBmonitor_buffer(stdout, EBmonitorBuffer, EBmonitorBufLength);
+```
