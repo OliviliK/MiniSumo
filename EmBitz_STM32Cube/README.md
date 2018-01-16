@@ -178,8 +178,11 @@ For me, a significant benefit is a support for **F7** processors that are not co
 
 # Add SVD File for Symbolic Names of Peripheral Registers
 * Use google to find **Resource Selector System View Description**
-* Open the www.st.com › Home › Resources page
+* Open the www.st.com › Products > Microcontrollers
 * Click on the series name, such as STM32F4
+* Click resources
+* Extend SVD line
+* Select System View Description line for download
 * Open the downloaded ZIP file
 * Move the SVD file into [ProjFolder]
 * In EmBitz, select Debug, Interfaces, select the downloaded SVD file
